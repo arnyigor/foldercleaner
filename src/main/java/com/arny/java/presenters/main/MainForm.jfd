@@ -1,0 +1,43 @@
+JFDML JFormDesigner: "6.0.4.0.167" Java: "1.8.0_152-release" encoding: "UTF-8"
+
+new FormModel {
+	contentType: "form/swing"
+	root: new FormRoot {
+		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
+			"$horizontalGroup": "par l {seq {space :::p, comp btn_update:::p::p, space :::p, comp btn_add:::p::p, space :::p, comp btn_remove:::p::p, space :0:305:x}, comp panel4::l:::x}"
+			"$verticalGroup": "par l {seq t {space :::p, par b {comp btn_update::b:p::p, comp btn_add::b:p::p, comp btn_remove::b:p::p}, space :::p, comp panel4:::::x}}"
+		} ) {
+			name: "this"
+			"title": "Очистка директорий"
+			"defaultCloseOperation": 3
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "btn_add"
+				"text": "Добавить"
+				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "btn_addActionPerformed", true ) )
+			} )
+			add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
+				"$horizontalGroup": "par l {comp scrollPane1::l::563:x}"
+				"$verticalGroup": "par l {comp scrollPane1::l::317:x}"
+			} ) {
+				name: "panel4"
+				add( new FormContainer( "javax.swing.JScrollPane", new FormLayoutManager( class javax.swing.JScrollPane ) ) {
+					name: "scrollPane1"
+					add( new FormComponent( "javax.swing.JTable" ) {
+						name: "table1"
+					} )
+				} )
+			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "btn_remove"
+				"text": "Удалить"
+			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "btn_update"
+				"text": "Обновить"
+			} )
+		}, new FormLayoutConstraints( null ) {
+			"location": new java.awt.Point( 0, 5 )
+			"size": new java.awt.Dimension( 565, 385 )
+		} )
+	}
+}
