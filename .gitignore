@@ -5,6 +5,7 @@ out/
 ### Java template
 # Compiled class file
 *.class
+files/
 
 # Log file
 *.log
