@@ -26,14 +26,10 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.1.0"
     implementation group: 'io.reactivex.rxjava2', name: 'rxjava', version: '2.1.1'
     implementation 'com.squareup.okhttp3:okhttp:3.9.1'
-    implementation 'com.googlecode.soundlibs:mp3spi:1.9.5.3'
-    implementation 'com.googlecode.soundlibs:basicplayer:3.0.0.0'
     implementation 'org.assertj:assertj-core:3.6.2'
     implementation group: 'com.google.code.gson', name: 'gson', version: '2.3.1'
-    implementation group: 'joda-time', name: 'joda-time', version: '2.3'
     implementation group: 'org.json', name: 'json', version: '20090211'
-    implementation group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1.1'
-    implementation 'org.xerial:sqlite-jdbc:3.21.0.1'
+    implementation 'org.xerial:sqlite-jdbc:3.25.2'
     testImplementation group: 'junit', name: 'junit', version: '4.12'
 }
 

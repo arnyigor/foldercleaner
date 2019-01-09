@@ -4,8 +4,8 @@ new FormModel {
 	contentType: "form/swing"
 	root: new FormRoot {
 		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
-			"$horizontalGroup": "par l {seq {space :::p, comp btn_update:::p::p, space :::p, comp btn_add:::p::p, space :::p, comp btn_remove:::p::p, space :0:305:x}, comp panel4::l:::x}"
-			"$verticalGroup": "par l {seq t {space :::p, par b {comp btn_update::b:p::p, comp btn_add::b:p::p, comp btn_remove::b:p::p}, space :::p, comp panel4:::::x}}"
+			"$horizontalGroup": "par l {seq {space :::p, comp btn_add:::p::p, space :::p, comp btn_update:::p::p, space :::p, comp btn_clean:::p::p, space :::p, comp btn_remove:::p::p, space :0:0:x}, comp panel4::l:::x}"
+			"$verticalGroup": "par l {seq t {space :::p, par b {comp btn_clean::b:p::p, comp btn_remove::b:p::p, comp btn_add::b:p::p, comp btn_update::b:p::p}, space :::p, comp panel4:::::x}}"
 		} ) {
 			name: "this"
 			"title": "Очистка директорий"
@@ -29,11 +29,15 @@ new FormModel {
 			} )
 			add( new FormComponent( "javax.swing.JButton" ) {
 				name: "btn_remove"
-				"text": "Удалить"
+				"text": "Удалить из списка"
 			} )
 			add( new FormComponent( "javax.swing.JButton" ) {
 				name: "btn_update"
 				"text": "Обновить"
+			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "btn_clean"
+				"text": "Очистить"
 			} )
 		}, new FormLayoutConstraints( null ) {
 			"location": new java.awt.Point( 0, 5 )

@@ -150,7 +150,7 @@ fun String?.parseInt(): Int? {
     }
 }
 
-fun <T> launchAsync(block: suspend () -> T, onComplete: (T) -> Unit = {}, onError: (Throwable) -> Unit = {}, dispatcher: CoroutineDispatcher = Dispatchers.IO, context: CoroutineContext = Dispatchers.Main + SupervisorJob(), onCanceled: () -> Unit = {}): Job {
+fun <T> launchAsync(block: suspend () -> T, onComplete: (T) -> Unit = {}, onError: (Throwable) -> Unit = {}, dispatcher: CoroutineDispatcher = Dispatchers.IO, context: CoroutineContext = Dispatchers.Default + SupervisorJob(), onCanceled: () -> Unit = {}): Job {
     val scope = CoroutineScope(context)
     return scope.launch {
         try {

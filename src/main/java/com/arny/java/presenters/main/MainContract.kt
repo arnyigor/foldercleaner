@@ -5,10 +5,11 @@ import com.arny.java.presenters.base.BaseMvpView
 
 object MainContract {
     interface View : BaseMvpView {
-
     }
 
     interface Presenter : BaseMvpPresenter<View> {
-        fun addFolder(path: String)
+        fun addFolder(path: String?)
+        fun initDB()
+        fun loadFolders()
     }
 }

@@ -4,38 +4,38 @@
 
 package com.arny.java.presenters.main;
 
-import java.awt.event.*;
-import org.jetbrains.annotations.Nullable;
+import com.arny.java.presenters.base.BaseMvpJFrame;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.awt.event.ActionEvent;
 
 /**
  * @author Arny
  */
-public class MainForm extends JFrame implements MainContract.View {
-    private final MainPresener mPresenter = new MainPresener();
-
-    public MainForm() {
-        initComponents();
-        initUI();
-        mPresenter.attachView(this);
-        addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosing(WindowEvent e) {
-                mPresenter.detachView();
-            }
-        });
+public class MainForm extends BaseMvpJFrame<MainContract.View, MainPresener> implements MainContract.View {
+    @Override
+    protected MainPresener initPresenter() {
+        return new MainPresener();
     }
 
     @Override
-    public void toast(@Nullable String title, @Nullable String error, boolean success) {
-
+    protected void onCreate() {
+        super.onCreate();
+        mPresenter.initDB();
+        System.out.println("MainForm onCreate");
     }
 
-    private void initUI() {
+    @Override
+    protected void onResume() {
+        super.onResume();
+        System.out.println("MainForm onResume");
+        mPresenter.loadFolders();
+    }
+
+    public MainForm() {
+        super();
+        initComponents();
         setVisible(true);
     }
 
@@ -43,10 +43,9 @@ public class MainForm extends JFrame implements MainContract.View {
         JFileChooser chooser = new JFileChooser();
         chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         int returnVal = chooser.showSaveDialog(this);
-        if(returnVal == JFileChooser.APPROVE_OPTION) {
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
             String path = chooser.getSelectedFile().getAbsolutePath();
-            System.out.println("You chose to open this file: " +
-                    path);
+            System.out.println("file path:" + path);
             mPresenter.addFolder(path);
         }
     }
@@ -59,6 +58,7 @@ public class MainForm extends JFrame implements MainContract.View {
         table1 = new JTable();
         btn_remove = new JButton();
         btn_update = new JButton();
+        btn_clean = new JButton();
 
         //======== this ========
         setTitle("\u041e\u0447\u0438\u0441\u0442\u043a\u0430 \u0434\u0438\u0440\u0435\u043a\u0442\u043e\u0440\u0438\u0439");
@@ -90,10 +90,13 @@ public class MainForm extends JFrame implements MainContract.View {
         }
 
         //---- btn_remove ----
-        btn_remove.setText("\u0423\u0434\u0430\u043b\u0438\u0442\u044c");
+        btn_remove.setText("\u0423\u0434\u0430\u043b\u0438\u0442\u044c \u0438\u0437 \u0441\u043f\u0438\u0441\u043a\u0430");
 
         //---- btn_update ----
         btn_update.setText("\u041e\u0431\u043d\u043e\u0432\u0438\u0442\u044c");
+
+        //---- btn_clean ----
+        btn_clean.setText("\u041e\u0447\u0438\u0441\u0442\u0438\u0442\u044c");
 
         GroupLayout contentPaneLayout = new GroupLayout(contentPane);
         contentPane.setLayout(contentPaneLayout);
@@ -101,12 +104,14 @@ public class MainForm extends JFrame implements MainContract.View {
             contentPaneLayout.createParallelGroup()
                 .addGroup(contentPaneLayout.createSequentialGroup()
                     .addContainerGap()
-                    .addComponent(btn_update)
-                    .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                     .addComponent(btn_add)
                     .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(btn_update)
+                    .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(btn_clean)
+                    .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                     .addComponent(btn_remove)
-                    .addGap(0, 305, Short.MAX_VALUE))
+                    .addGap(0, 0, Short.MAX_VALUE))
                 .addComponent(panel4, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         contentPaneLayout.setVerticalGroup(
@@ -114,9 +119,10 @@ public class MainForm extends JFrame implements MainContract.View {
                 .addGroup(GroupLayout.Alignment.TRAILING, contentPaneLayout.createSequentialGroup()
                     .addContainerGap()
                     .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                        .addComponent(btn_update)
+                        .addComponent(btn_clean)
+                        .addComponent(btn_remove)
                         .addComponent(btn_add)
-                        .addComponent(btn_remove))
+                        .addComponent(btn_update))
                     .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                     .addComponent(panel4, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -132,5 +138,6 @@ public class MainForm extends JFrame implements MainContract.View {
     private JTable table1;
     private JButton btn_remove;
     private JButton btn_update;
+    private JButton btn_clean;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
 }

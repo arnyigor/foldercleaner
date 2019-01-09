@@ -122,7 +122,7 @@ public class FileUtils {
                     if (!newDir.exists()) {
                         boolean success = newDir.mkdirs();
                         if (success == false) {
-                            System.out.println("Problem creating Folder");
+                            System.out.println("Problem creating CleanFolder");
                         }
                     }
                 } else {
@@ -299,6 +299,20 @@ public class FileUtils {
         return new DecimalFormat("#,##0.##").format(size
                 / Math.pow(1024, digitGroups))
                 + " " + units[digitGroups];
+    }
+
+    public static long getFolderSize(File folder) {
+        long length = 0;
+        folder.mkdirs();
+        File[] files = folder.listFiles();
+        for (File file : files) {
+            if (file.isFile()) {
+                length += file.length();
+            } else {
+                length += getFolderSize(file);
+            }
+        }
+        return length;
     }
 
     public static String formatFileSize(long size, int digits) {
