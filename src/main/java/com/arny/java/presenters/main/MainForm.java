@@ -4,39 +4,69 @@
 
 package com.arny.java.presenters.main;
 
+import javax.swing.table.*;
+
+import com.arny.java.data.models.CleanFolder;
 import com.arny.java.presenters.base.BaseMvpJFrame;
+import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
+import javax.swing.table.TableRowSorter;
 import java.awt.*;
-import java.awt.event.ActionEvent;
+import java.awt.event.*;
+import java.util.ArrayList;
 
-/**
- * @author Arny
- */
 public class MainForm extends BaseMvpJFrame<MainContract.View, MainPresener> implements MainContract.View {
     @Override
     protected MainPresener initPresenter() {
         return new MainPresener();
     }
 
+    private FoldersTableModel tableModel;
+
+    public MainForm() {
+        super();
+        initComponents();
+        initComponentsListener();
+        setVisible(true);
+    }
+
+    private void initComponentsListener() {
+        table_folders.addMouseListener(new MouseAdapter() {
+
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                int row = table_folders.convertRowIndexToModel(table_folders.getSelectedRow());
+                CleanFolder folder = tableModel.getFolders().get(row);
+                mPresenter.initCurrent(folder);
+            }
+        });
+        btn_update.addActionListener(e -> mPresenter.loadFolders());
+        btn_clean.addActionListener(e -> mPresenter.removeSelectedFolder());
+        btn_remove.addActionListener(e -> mPresenter.deleteSelectedFolder());
+    }
+
+    @Override
+    public void clearSelection() {
+        table_folders.clearSelection();
+    }
+
+    @Override
+    public void updateTable(@NotNull ArrayList<CleanFolder> folders) {
+        tableModel = new FoldersTableModel(folders);
+        table_folders.setModel(tableModel);
+    }
+
     @Override
     protected void onCreate() {
         super.onCreate();
         mPresenter.initDB();
-        System.out.println("MainForm onCreate");
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        System.out.println("MainForm onResume");
         mPresenter.loadFolders();
-    }
-
-    public MainForm() {
-        super();
-        initComponents();
-        setVisible(true);
     }
 
     private void btn_addActionPerformed(ActionEvent e) {
@@ -55,7 +85,7 @@ public class MainForm extends BaseMvpJFrame<MainContract.View, MainPresener> imp
         btn_add = new JButton();
         panel4 = new JPanel();
         scrollPane1 = new JScrollPane();
-        table1 = new JTable();
+        table_folders = new JTable();
         btn_remove = new JButton();
         btn_update = new JButton();
         btn_clean = new JButton();
@@ -74,7 +104,25 @@ public class MainForm extends BaseMvpJFrame<MainContract.View, MainPresener> imp
 
             //======== scrollPane1 ========
             {
-                scrollPane1.setViewportView(table1);
+
+                //---- table_folders ----
+                table_folders.setModel(new DefaultTableModel(
+                    new Object[][] {
+                        {null, null},
+                        {null, null},
+                    },
+                    new String[] {
+                        "Path", "Size"
+                    }
+                ));
+                {
+                    TableColumnModel cm = table_folders.getColumnModel();
+                    cm.getColumn(0).setResizable(false);
+                    cm.getColumn(1).setResizable(false);
+                }
+                table_folders.setAutoCreateRowSorter(true);
+                table_folders.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+                scrollPane1.setViewportView(table_folders);
             }
 
             GroupLayout panel4Layout = new GroupLayout(panel4);
@@ -135,7 +183,7 @@ public class MainForm extends BaseMvpJFrame<MainContract.View, MainPresener> imp
     private JButton btn_add;
     private JPanel panel4;
     private JScrollPane scrollPane1;
-    private JTable table1;
+    private JTable table_folders;
     private JButton btn_remove;
     private JButton btn_update;
     private JButton btn_clean;

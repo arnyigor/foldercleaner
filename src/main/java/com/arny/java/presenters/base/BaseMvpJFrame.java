@@ -14,19 +14,19 @@ public abstract class BaseMvpJFrame<V extends BaseMvpView, P extends BaseMvpPres
     protected abstract P initPresenter();
 
     protected void onCreate() {
-        System.out.println("onCreate");
+       // System.out.println("onCreate");
     }
 
     protected void onResume() {
-        System.out.println("onResume");
+       // System.out.println("onResume");
     }
 
     protected void onPause() {
-        System.out.println("onPause");
+        //System.out.println("onPause");
     }
 
     protected void onDestroy() {
-        System.out.println("onDestroy");
+        //System.out.println("onDestroy");
     }
 
     @Override
@@ -42,12 +42,6 @@ public abstract class BaseMvpJFrame<V extends BaseMvpView, P extends BaseMvpPres
         mPresenter.attachView((V) this);
         onCreate();
         addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowOpened(WindowEvent e) {
-                super.windowOpened(e);
-                System.out.println("Opened");
-            }
-
             @Override
             public void windowClosing(WindowEvent e) {
                 super.windowClosing(e);

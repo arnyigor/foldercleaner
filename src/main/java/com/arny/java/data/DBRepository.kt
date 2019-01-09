@@ -52,4 +52,15 @@ interface DBRepository {
             onError.invoke(it)
         })
     }
+
+    fun deleteFolder(id: Long, onComplete: (Boolean) -> Unit = {}, onError: (Throwable) -> Unit = {}) {
+        launchAsync({
+            getDB().executeSQL(AppConstants.DB.SQL_DELETE_FROM_MAIN_WHERE_ID + id)
+        },{
+            onComplete.invoke(it)
+        },{
+            onError.invoke(it)
+        })
+    }
+
 }
