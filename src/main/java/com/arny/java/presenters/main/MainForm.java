@@ -31,6 +31,11 @@ public class MainForm extends BaseMvpJFrame<MainContract.View, MainPresener> imp
         setVisible(true);
     }
 
+    @Override
+    public void showInfo(@NotNull String msg) {
+        label_info.setText(msg);
+    }
+
     private void initComponentsListener() {
         table_folders.addMouseListener(new MouseAdapter() {
 
@@ -86,6 +91,7 @@ public class MainForm extends BaseMvpJFrame<MainContract.View, MainPresener> imp
         panel4 = new JPanel();
         scrollPane1 = new JScrollPane();
         table_folders = new JTable();
+        label_info = new JLabel();
         btn_remove = new JButton();
         btn_update = new JButton();
         btn_clean = new JButton();
@@ -93,6 +99,7 @@ public class MainForm extends BaseMvpJFrame<MainContract.View, MainPresener> imp
         //======== this ========
         setTitle("\u041e\u0447\u0438\u0441\u0442\u043a\u0430 \u0434\u0438\u0440\u0435\u043a\u0442\u043e\u0440\u0438\u0439");
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
         Container contentPane = getContentPane();
 
         //---- btn_add ----
@@ -107,13 +114,13 @@ public class MainForm extends BaseMvpJFrame<MainContract.View, MainPresener> imp
 
                 //---- table_folders ----
                 table_folders.setModel(new DefaultTableModel(
-                    new Object[][] {
-                        {null, null},
-                        {null, null},
-                    },
-                    new String[] {
-                        "Path", "Size"
-                    }
+                        new Object[][]{
+                                {null, null},
+                                {null, null},
+                        },
+                        new String[]{
+                                "Path", "Size"
+                        }
                 ));
                 {
                     TableColumnModel cm = table_folders.getColumnModel();
@@ -125,15 +132,23 @@ public class MainForm extends BaseMvpJFrame<MainContract.View, MainPresener> imp
                 scrollPane1.setViewportView(table_folders);
             }
 
+            //---- label_info ----
+            label_info.setText("text");
+
             GroupLayout panel4Layout = new GroupLayout(panel4);
             panel4.setLayout(panel4Layout);
             panel4Layout.setHorizontalGroup(
-                panel4Layout.createParallelGroup()
-                    .addComponent(scrollPane1, GroupLayout.DEFAULT_SIZE, 563, Short.MAX_VALUE)
+                    panel4Layout.createParallelGroup()
+                            .addComponent(scrollPane1, GroupLayout.DEFAULT_SIZE, 563, Short.MAX_VALUE)
+                            .addComponent(label_info, GroupLayout.DEFAULT_SIZE, 563, Short.MAX_VALUE)
             );
             panel4Layout.setVerticalGroup(
-                panel4Layout.createParallelGroup()
-                    .addComponent(scrollPane1, GroupLayout.DEFAULT_SIZE, 317, Short.MAX_VALUE)
+                    panel4Layout.createParallelGroup()
+                            .addGroup(panel4Layout.createSequentialGroup()
+                                    .addComponent(scrollPane1, GroupLayout.PREFERRED_SIZE, 300, GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(label_info, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)
+                                    .addContainerGap())
             );
         }
 
@@ -149,30 +164,30 @@ public class MainForm extends BaseMvpJFrame<MainContract.View, MainPresener> imp
         GroupLayout contentPaneLayout = new GroupLayout(contentPane);
         contentPane.setLayout(contentPaneLayout);
         contentPaneLayout.setHorizontalGroup(
-            contentPaneLayout.createParallelGroup()
-                .addGroup(contentPaneLayout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(btn_add)
-                    .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(btn_update)
-                    .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(btn_clean)
-                    .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(btn_remove)
-                    .addGap(0, 0, Short.MAX_VALUE))
-                .addComponent(panel4, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                contentPaneLayout.createParallelGroup()
+                        .addGroup(contentPaneLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(btn_add)
+                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btn_update)
+                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btn_clean)
+                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btn_remove)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                        .addComponent(panel4, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         contentPaneLayout.setVerticalGroup(
-            contentPaneLayout.createParallelGroup()
-                .addGroup(GroupLayout.Alignment.TRAILING, contentPaneLayout.createSequentialGroup()
-                    .addContainerGap()
-                    .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                        .addComponent(btn_clean)
-                        .addComponent(btn_remove)
-                        .addComponent(btn_add)
-                        .addComponent(btn_update))
-                    .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(panel4, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                contentPaneLayout.createParallelGroup()
+                        .addGroup(GroupLayout.Alignment.TRAILING, contentPaneLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                        .addComponent(btn_clean)
+                                        .addComponent(btn_remove)
+                                        .addComponent(btn_add)
+                                        .addComponent(btn_update))
+                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(panel4, GroupLayout.DEFAULT_SIZE, 332, Short.MAX_VALUE))
         );
         pack();
         setLocationRelativeTo(getOwner());
@@ -184,6 +199,7 @@ public class MainForm extends BaseMvpJFrame<MainContract.View, MainPresener> imp
     private JPanel panel4;
     private JScrollPane scrollPane1;
     private JTable table_folders;
+    private JLabel label_info;
     private JButton btn_remove;
     private JButton btn_update;
     private JButton btn_clean;

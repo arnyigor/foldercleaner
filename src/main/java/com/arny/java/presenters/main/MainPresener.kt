@@ -2,6 +2,8 @@ package com.arny.java.presenters.main
 
 import com.arny.java.data.AppRepositoryImpl
 import com.arny.java.data.models.CleanFolder
+import com.arny.java.data.utils.FileUtils
+import com.arny.java.data.utils.MathUtils
 import com.arny.java.data.utils.empty
 import com.arny.java.presenters.base.BaseMvpPresenterImpl
 
@@ -25,12 +27,19 @@ class MainPresener : BaseMvpPresenterImpl<MainContract.View>(), MainContract.Pre
         })
     }
 
+    private fun calcTotalSize() {
+        var total = 0L
+        folders.forEach { total += it.size }
+        val totalFilesSize = FileUtils.formatFileSize(total)
+        mView?.showInfo("Размер файлов:$totalFilesSize")
+    }
+
     override fun loadFolders() {
+        mView?.showInfo("Загрузка папок")
         appRepository.loadFolders({
-            if (it.isNotEmpty()) {
-                folders = it
-                mView?.updateTable(folders)
-            }
+            folders = it
+            mView?.updateTable(folders)
+            calcTotalSize()
         }, {
             mView?.toast("Ошибка загрузки папок", it.message)
         })
@@ -55,6 +64,7 @@ class MainPresener : BaseMvpPresenterImpl<MainContract.View>(), MainContract.Pre
     }
 
     override fun removeSelectedFolder() {
+        mView?.showInfo("Очистка каталога")
         appRepository.cleanFolders(current?.path, {
             if (it) {
                 mView?.toast("Очистка завершена", "Папка ${current?.path} очищена", true)
@@ -67,6 +77,7 @@ class MainPresener : BaseMvpPresenterImpl<MainContract.View>(), MainContract.Pre
     }
 
     override fun deleteSelectedFolder() {
+        mView?.showInfo("Удаление каталога из списка")
         val id = current?.id
         if (id != null) {
             appRepository.deleteFolder(id, {

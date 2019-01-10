@@ -5,19 +5,20 @@ new FormModel {
 	root: new FormRoot {
 		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
 			"$horizontalGroup": "par l {seq {space :::p, comp btn_add:::p::p, space :::p, comp btn_update:::p::p, space :::p, comp btn_clean:::p::p, space :::p, comp btn_remove:::p::p, space :0:0:x}, comp panel4::l:::x}"
-			"$verticalGroup": "par l {seq t {space :::p, par b {comp btn_clean::b:p::p, comp btn_remove::b:p::p, comp btn_add::b:p::p, comp btn_update::b:p::p}, space :::p, comp panel4:::::x}}"
+			"$verticalGroup": "par l {seq t {space :::p, par b {comp btn_clean::b:p::p, comp btn_remove::b:p::p, comp btn_add::b:p::p, comp btn_update::b:p::p}, space :::p, comp panel4::::332:x}}"
 		} ) {
 			name: "this"
 			"title": "Очистка директорий"
 			"defaultCloseOperation": 3
+			"resizable": false
 			add( new FormComponent( "javax.swing.JButton" ) {
 				name: "btn_add"
 				"text": "Добавить"
 				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "btn_addActionPerformed", true ) )
 			} )
 			add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
-				"$horizontalGroup": "par l {comp scrollPane1::l::563:x}"
-				"$verticalGroup": "par l {comp scrollPane1::l::317:x}"
+				"$horizontalGroup": "par l {comp scrollPane1::::563:x, comp label_info::::563:x}"
+				"$verticalGroup": "par l {seq l {comp scrollPane1:::p:300:p, space :::x, comp label_info:::p:26:p, space :::p}}"
 			} ) {
 				name: "panel4"
 				add( new FormContainer( "javax.swing.JScrollPane", new FormLayoutManager( class javax.swing.JScrollPane ) ) {
@@ -50,6 +51,10 @@ new FormModel {
 						"selectionMode": 0
 					} )
 				} )
+				add( new FormComponent( "javax.swing.JLabel" ) {
+					name: "label_info"
+					"text": "text"
+				} )
 			} )
 			add( new FormComponent( "javax.swing.JButton" ) {
 				name: "btn_remove"
@@ -65,7 +70,7 @@ new FormModel {
 			} )
 		}, new FormLayoutConstraints( null ) {
 			"location": new java.awt.Point( 0, 5 )
-			"size": new java.awt.Dimension( 565, 385 )
+			"size": new java.awt.Dimension( 565, 400 )
 		} )
 	}
 }

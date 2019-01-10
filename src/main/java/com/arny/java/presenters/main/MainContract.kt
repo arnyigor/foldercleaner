@@ -8,6 +8,7 @@ object MainContract {
     interface View : BaseMvpView {
         fun updateTable(folders: ArrayList<CleanFolder>)
         fun clearSelection()
+        fun showInfo(msg: String)
     }
 
     interface Presenter : BaseMvpPresenter<View> {
